@@ -1,179 +1,156 @@
 # Personal Productivity AI Coach
 
-### Turning personal activity data into structured AI-assisted reflection and behavioral coaching during USMLE preparation
+### Turning personal activity data into structured AI-assisted reflection during USMLE preparation
 
-*RescueTime API integration · multi-LLM experimentation · behavioral metrics · context-aware coaching · AI-assisted development*
+*RescueTime API integration · behavioral metrics · multi-model experimentation · context-aware coaching · AI-assisted development*
 
-> **Portfolio case study. Source code, internal prompts, API configuration, and implementation details are intentionally private.**
+> **Portfolio case study. Source code, internal prompts, provider configuration, scoring logic, and detailed implementation are intentionally private.**
 
-I built **Personal Productivity AI Coach** during USMLE preparation as my first experiment with the RescueTime API — before several of my later study-productivity tools.
+I built **Personal Productivity AI Coach** during USMLE preparation as my first experiment using RescueTime activity data as the foundation for something beyond a conventional productivity dashboard.
 
 The idea came from a simple observation:
 
-**RescueTime could tell me what I was doing. I wanted another layer to help me think about what those patterns meant.**
+> **RescueTime could tell me what I was doing. I wanted another layer to help me think about what those patterns meant.**
 
-I had also spent years reading authors such as Brian Klemmer, including *The Compassionate Samurai*, and was interested in the difference between receiving information and being actively coached. A dashboard can report behavior. A coach can interpret it, challenge it, reframe it, and ask what should change next.
+I had also spent years reading performance and coaching literature, including Brian Klemmer's *The Compassionate Samurai*, and became interested in the difference between simply receiving information and being actively challenged to interpret it.
 
-This project was my attempt to explore that difference using my own activity data.
+A dashboard can report behavior.
+
+I wanted to explore whether an AI-assisted coach could **interpret patterns, surface less-obvious problems, and help turn observation into a concrete next action**.
 
 <p align="center">
-  <img src="media/01_ai-coach_browser-context_portfolio.png" alt="Personal Productivity AI Coach running beside a live browser workflow" width="900"/>
+  <img src="media/01_ai-coach_browser-context_portfolio.png" width="100%" alt="Personal Productivity AI Coach running beside a live browser workflow">
+  <br>
+  <sub><b>Browser-side coaching interface operating alongside my normal study workflow</b></sub>
 </p>
+
+> Screenshots reflect my own real activity data and experimental coaching output rather than demonstration content.
 
 ---
 
 ## At a Glance
 
-| | |
+| Aspect | Purpose |
 |---|---|
 | **Interface** | Browser-side slide-in productivity coaching panel |
-| **Trigger** | `Option + A` to open or close the coach |
 | **Measurement layer** | RescueTime activity data |
 | **Time windows** | Today · 7 Days · This Month |
-| **Historical AI providers tested** | Groq · Mistral · NVIDIA · Cohere · Gemini |
+| **Behavioral signals** | Deep-work ratio, fragmentation, longest productive block, peak/weak periods, context-switch patterns |
 | **Coaching modes** | Deep Hourly · Summary · Enterprise · World Class |
-| **Example computed signals** | Deep-work ratio · fragmentation index · longest productive block · peak/worst periods · context-switch patterns |
-| **Interaction** | Structured coaching output plus follow-up questions about the same activity data |
+| **AI layer** | Multiple language-model providers tested during development |
+| **Interaction** | Structured coaching output plus follow-up questions about the same activity context |
 
-### Conceptually
+Conceptually:
 
-**RescueTime activity data → structured behavioral metrics → selected coaching lens → AI interpretation → actionable reflection**
+**activity data → behavioral metrics → coaching lens → AI interpretation → actionable reflection**
 
 This was a personal experimentation project, not a validated psychological, clinical, or productivity-assessment instrument.
 
 ---
 
-## Why I Built It
+# From Activity Data to Coaching
 
-Productivity dashboards are useful, but they still leave the user with the work of interpretation.
+After selecting a time window and coaching mode, the tool transformed RescueTime activity data into a structured behavioral summary before sending that context to the AI layer.
 
-I wanted to explore questions such as:
+The interface surfaced signals such as:
 
-- Was I actually doing sustained work, or merely accumulating scattered productive minutes?
-- Was an apparently productive application helping the main goal or competing with it?
-- At what times was my attention fragmenting most?
-- Were there patterns in the data that were not obvious from a daily total?
-- What should I change in the next study session rather than simply observe?
-
-The missing layer, for me, was **interpretation**.
-
-RescueTime served as the measurement layer. The AI Coach was an experimental interpretation layer built on top of it.
-
----
-
-## From Activity Data to Coaching
-
-After selecting a time window and analysis mode, the tool transformed activity data into a set of structured productivity signals before passing a summarized behavioral picture to the selected AI provider.
-
-The interface surfaced metrics such as:
-
-- deep-work ratio
-- fragmentation / context-switching
-- longest productive block
-- productive versus distracting activity
-- peak and low-performing periods
-- application-level patterns
+- deep-work ratio,
+- fragmentation and context switching,
+- longest productive block,
+- productive versus distracting activity,
+- stronger and weaker periods,
+- and application-level patterns.
 
 <p align="center">
-  <img src="media/02_ai-coach_metrics-and-coaching_portfolio.png" alt="Computed productivity metrics and AI coaching output" width="720"/>
+  <img src="media/02_ai-coach_metrics-and-coaching_portfolio.png" width="100%" alt="Computed productivity metrics and AI coaching output">
+  <br>
+  <sub><b>Structured behavioral metrics paired with AI-assisted coaching</b></sub>
 </p>
 
-The point was not to treat one score as absolute truth.
+The purpose was not to treat any one score as absolute truth.
 
-The metrics gave the model a more structured picture than a raw list of applications and durations, allowing the response to move from:
+The metrics simply gave the model a more structured picture than a raw list of applications and durations, allowing the conversation to move from:
 
 **“What did I use?”**
 
 toward:
 
-**“What pattern does this activity suggest?”**
+**“What pattern does this activity suggest, and what should I change next?”**
 
 ---
 
 ## Beyond Summarizing the Data
 
-One of the parts I found most interesting was the **HIDDEN PATTERN** section.
+One of the most useful ideas in the project was the **HIDDEN PATTERN** section.
 
-A low productivity percentage alone is not especially insightful. But combining several signals — for example, very short productive sessions, a high level of switching, and the absence of a sustained productive block — can reveal something qualitatively different about how the day unfolded.
+A low productivity percentage alone is not especially informative.
 
-The coach attempted to surface those less-obvious patterns and then translate them into specific next actions.
+But combining several signals — for example, short productive sessions, frequent context switching, and the absence of a sustained work block — can suggest a very different picture of how the day unfolded.
 
 <p align="center">
-  <img src="media/03_ai-coach_insight-to-action_portfolio.png" alt="Hidden Pattern and Your 3 Moves coaching sections" width="720"/>
+  <img src="media/03_ai-coach_insight-to-action_portfolio.png" width="100%" alt="Hidden Pattern and Your 3 Moves coaching sections">
+  <br>
+  <sub><b>Moving from behavioral pattern recognition toward specific next actions</b></sub>
 </p>
 
 That distinction became central to the project:
 
-**A dashboard reports. A coach interprets, challenges, reframes, and asks what should change next.**
+> **A dashboard reports. A coach interprets, challenges, reframes, and asks what should change next.**
 
 ---
 
 ## Multiple Coaching Lenses
 
-As the project evolved, I realized that one style of analysis could not answer every productivity question well.
+As the project evolved, I found that one style of analysis did not fit every question.
 
-I therefore experimented with four different coaching lenses:
+I therefore experimented with four coaching lenses:
 
-- **Deep Hourly** — more granular examination of activity, productive periods, and fragmentation
-- **Summary** — a concise synthesis of the period with key patterns and actionable moves
-- **Enterprise** — a more operational lens focused on recurring friction, allocation, and systemic patterns
-- **World Class** — an experimental performance-oriented lens that drew on named productivity and performance frameworks
+- **Deep Hourly** — granular examination of activity, productive periods, and fragmentation
+- **Summary** — concise synthesis of major patterns and next actions
+- **Enterprise** — operational view of recurring friction, allocation, and systemic patterns
+- **World Class** — experimental performance-oriented interpretation using broader coaching frameworks
 
 <p align="center">
-  <img src="media/04_ai-coach_analysis-section-sampler_portfolio.png" alt="Representative sections from Deep Hourly, Summary, Enterprise, and World Class coaching modes" width="900"/>
+  <img src="media/04_ai-coach_analysis-section-sampler_portfolio.png" width="100%" alt="Representative sections from the four coaching modes">
+  <br>
+  <sub><b>Different coaching lenses applied to the same underlying behavioral record</b></sub>
 </p>
 
-The modes deliberately emphasized different questions while operating on the same underlying behavioral record.
+The modes deliberately emphasized different questions while working from the same underlying activity data.
 
-The **World Class** mode was exploratory. Some outputs referenced external authors, research concepts, organizations, or numerical benchmarks supplied through the coaching prompt. I do **not** present those generated comparisons as independently validated performance standards; they were part of an experiment in how different prompt lenses changed interpretation.
+The **World Class** mode was exploratory. Some generated outputs incorporated external frameworks, authors, or numerical benchmarks supplied through the coaching context. I do **not** present those generated comparisons as independently validated performance standards.
 
 ---
 
-## Multi-Provider Experimentation
+# The Most Interesting Insight: AI Could Become the Distraction
 
-The project also became an experiment in working across multiple AI APIs.
+One of the most memorable patterns surfaced by the project was also an uncomfortable one:
 
-At different stages, I tested providers including:
+> **AI use could look productive while still displacing the work I had actually intended to do.**
 
-- Groq
-- Mistral
-- NVIDIA
-- Cohere
-- Gemini
+Reading, experimenting, prompting, and building could all feel intellectually productive.
 
-This was useful because models differed in output style, practical limits, reliability, and how well they handled the structured activity summaries I was generating.
+But during dedicated exam preparation, the more important question was:
 
-Provider availability and free-tier endpoints changed over time, so the models visible in the screenshots represent the project **at that stage of development**, not a claim about what is currently available.
+> **Was this activity helping the primary goal at that moment?**
 
-Gemini became particularly useful during my own later testing because it was practical for producing longer structured coaching responses within the access available to me at the time.
+The coach repeatedly surfaced periods in which extensive use of AI tools competed with direct engagement with my core study material.
 
----
+That created an interesting irony:
 
-## The Most Interesting Insight: AI Could Itself Become the Distraction
-
-One of the most memorable patterns surfaced by the project was an uncomfortable one:
-
-**AI use could look productive while still displacing the work I had actually intended to do.**
-
-Reading, experimenting, prompting, and building could all feel intellectually productive. But during dedicated exam preparation, the relevant question was not whether an activity was interesting or useful in isolation.
-
-The question was:
-
-**Was it helping the primary goal at that moment?**
-
-The coach repeatedly surfaced periods in which extensive AI-tool use competed with direct engagement with my core study material.
-
-That created an interesting irony: an AI-based coaching system was helping expose excessive AI use.
+**an AI-based coaching system was helping expose excessive AI use.**
 
 <p align="center">
-  <img src="media/05_ai-coach_personal-coaching-identity_portfolio.png" alt="Coach's Corner showing the project's more direct coaching style" width="720"/>
+  <img src="media/05_ai-coach_personal-coaching-identity_portfolio.png" width="100%" alt="Coach's Corner showing the project's more direct coaching style">
+  <br>
+  <sub><b>A more direct coaching view focused on interpreting behavior rather than merely reporting it</b></sub>
 </p>
 
-The observations reinforced a broader change in how I managed my environment. I increasingly relied on stronger distraction controls, including Cold Turkey and Micro Manager, and made my study routine more structured.
+That insight gradually changed how I approached productivity.
 
-As that environment became more consistent, I used the AI Coach less frequently.
+I increasingly relied on stronger environmental controls and a more structured study routine. As those systems became more consistent, I used the AI Coach less frequently.
 
-That progression became one of the most useful lessons from the project:
+The progression became:
 
 **awareness → interpretation → coaching → environmental control → routine**
 
@@ -183,47 +160,45 @@ A better outcome was reaching the point where I needed it less.
 
 ---
 
-## How It Evolved
-
 <details>
-<summary><strong>Development story</strong></summary>
+<summary><strong>Development Progression & Technical Notes</strong></summary>
 
-This was the first RescueTime/API tool I built.
+<br>
 
-It preceded my later Review Timer, Test Timer, QBank productivity tools, and Personal Focus Pattern Explorer.
+### Development progression
 
-At that stage, I did not yet have access to the more capable agentic coding workflows I use today. I built the project through repeated cycles of:
+This was the first RescueTime/API-based tool I built.
 
-- defining a feature or behavior I wanted
-- prompting earlier AI coding models
-- reading and checking the generated implementation
-- testing it against real RescueTime data
-- finding failures and edge cases
-- describing corrections
-- retesting
-- gradually expanding the tool
+The early versions were relatively simple. Through repeated real-world use, the project gradually accumulated:
 
-The early versions were much simpler.
+- RescueTime API integration,
+- multiple time-window views,
+- calculated behavioral metrics,
+- several coaching modes,
+- multi-provider AI experimentation,
+- structured mode-specific responses,
+- follow-up questions using the same activity context,
+- loading and error-handling behavior,
+- and substantial interface refinement.
 
-Over time, the project accumulated:
+Daily use exposed edge cases involving data interpretation, provider behavior, response structure, interface state, and changing API availability.
 
-- RescueTime API integration
-- several data views and activity summaries
-- calculated behavioral metrics
-- Today / 7 Days / This Month analysis
-- multiple coaching modes
-- several AI-provider integrations
-- structured mode-specific responses
-- model switching
-- follow-up questions against the same personal activity context
-- loading, retry, and error-handling behavior
-- substantial interface refinement
+The tool therefore evolved through repeated cycles of:
 
-The system also required maintenance because model names, endpoints, free-tier limits, and provider availability changed.
+**define → implement → test → identify failure → revise → validate**
 
-Eventually, the practical need for the coach itself decreased. Stronger environmental controls and a more repeatable study routine reduced the amount of interpretation I needed from an external system.
+### Technical snapshot
 
-That was not a failure of the project. In many ways, it was the desired endpoint.
+| Aspect | Detail |
+|---|---|
+| **Platform** | Browser-based JavaScript userscript |
+| **Data source** | RescueTime API using my own activity data |
+| **Interface** | Slide-in browser coaching panel |
+| **Analysis windows** | Today · 7 Days · This Month |
+| **AI architecture** | Multi-provider experimentation |
+| **Source availability** | Private |
+
+Exact prompts, provider routing, metric formulas, thresholds, preprocessing logic, API handling, and implementation architecture remain private.
 
 </details>
 
@@ -231,90 +206,55 @@ That was not a failure of the project. In many ways, it was the desired endpoint
 
 ## AI-Assisted Development
 
-This project was created with **substantial AI coding assistance**.
+I did not hand-code the entire application from scratch.
 
-I did not hand-code the entire application from scratch, and I do not present it that way.
+I defined the problem, desired coaching behavior, metrics, interface, constraints, and edge cases; used AI coding systems to generate and revise implementations; and repeatedly tested the result against my own real activity data.
 
 My role centered on:
 
-- identifying the problem
-- defining the desired behavior and coaching experience
-- specifying features and interface changes
-- iteratively prompting AI systems to generate and revise code
-- testing the system against real personal data
-- identifying bugs and weak outputs
-- finding edge cases
-- specifying corrections
-- comparing alternative implementations
-- repeatedly validating and refining the result
+**problem definition → specification → AI-assisted implementation → testing → failure detection → debugging direction → validation → refinement**
 
-At the time this project began, I had basic programming experience but did not yet have access to the modern agentic coding tools I later used.
+The exact model orchestration, prompts, handoffs, provider strategy, and private development workflow are intentionally not published.
 
-For me, the project represents **AI-assisted software development driven by problem definition, experimentation, testing, debugging, and iterative refinement**.
+What I am showcasing is the process of turning a personal behavioral problem into a working analytical tool through **system thinking, AI-assisted development, experimentation, testing, debugging, and sustained refinement**.
 
 ---
 
-## What It Taught Me
+## Current Limitations
 
-The technical experiment was interesting, but several broader lessons mattered more.
+This project is a **personal exploratory tool**, not a validated psychological, clinical, cognitive, or productivity-assessment instrument.
 
-### Data is not the same as understanding
+AI-generated interpretations can sound more certain than the underlying data warrants.
 
-Collecting more metrics does not automatically create better decisions. The useful step is deciding what a measurement means in the context of the actual goal.
+The system cannot determine with certainty:
 
-### Interpretation should remain challengeable
+- whether an apparently productive activity was actually useful,
+- whether an application supported or competed with the user's primary goal,
+- whether a behavioral pattern reflects attention, motivation, fatigue, or another cause,
+- or whether a generated recommendation would improve performance.
 
-AI-generated explanations can sound authoritative even when the underlying inference is uncertain. I learned to treat the coaching as a prompt for reflection rather than as an unquestionable diagnosis of behavior.
-
-### Environment can outperform motivation
-
-Once the largest distraction pathways were aggressively restricted, maintaining focus required less repeated coaching.
-
-### Tools can become avoidance mechanisms
-
-A sophisticated productivity system can itself become another project to optimize. At some point, the correct action is to stop improving the system and do the work it was built to support.
-
----
-
-## What This Project Demonstrates
-
-Beyond the productivity use case, this project reflects the way I tend to approach practical problems:
-
-1. notice friction in an existing workflow;
-2. identify what information is missing;
-3. ask whether data can make the problem more visible;
-4. prototype a tool;
-5. use it in a real setting;
-6. challenge the output rather than accepting it blindly;
-7. refine what works;
-8. discard what no longer adds value.
-
-The value of the project, for me, is not any individual AI-generated recommendation.
-
-It is the process of turning a personal problem into something **measurable, testable, interpretable, and improvable**.
+I therefore treated the coaching as a **prompt for reflection and experimentation**, not as an objective diagnosis of behavior.
 
 ---
 
 ## Project Status
 
-This repository is a **portfolio case study**.
+**Personal-use experimental tool / portfolio case study**
 
-The production source code is intentionally private.
+The production source code and detailed implementation remain private.
 
-Not included publicly:
+Not published:
 
-- API credentials or configuration
-- internal prompts
-- provider-routing logic
-- metric formulas
-- thresholds and scoring logic
-- preprocessing architecture
-- detailed RescueTime API handling
-- private activity data beyond the selected portfolio examples
+- API credentials or configuration,
+- internal prompts,
+- provider-routing logic,
+- metric formulas,
+- thresholds and scoring logic,
+- preprocessing architecture,
+- detailed RescueTime API handling,
+- or private activity data beyond selected portfolio examples.
 
-The screenshots demonstrate the user-facing behavior and development outcome without publishing the implementation required to reproduce the system.
-
-This project is not currently distributed as a public application.
+The repository demonstrates the project's **purpose, interface, development process, and real-world use** without publishing the implementation required to reproduce it.
 
 ---
 
@@ -322,7 +262,7 @@ This project is not currently distributed as a public application.
 
 **Pranav Krishna Buddhapuram**
 
-Orthopaedic surgeon with interests in medical education, research, productivity systems, data-informed self-improvement, and practical AI-assisted software development.
+Orthopaedic surgeon with interests in medical education, research, productivity systems, data-informed self-improvement, behavioral analytics, and practical AI-assisted software development.
 
 ---
 
@@ -330,6 +270,4 @@ Orthopaedic surgeon with interests in medical education, research, productivity 
 
 © 2026 Pranav Krishna Buddhapuram. All rights reserved.
 
-This repository is provided for portfolio and demonstration purposes only.
-
-No license is granted to reproduce, distribute, modify, commercialize, reverse engineer, or create derivative implementations from the materials presented here.
+This repository is a portfolio showcase only. No license is granted for copying, reproducing, redistributing, modifying, reverse-engineering, derivative implementation, or commercial use.
